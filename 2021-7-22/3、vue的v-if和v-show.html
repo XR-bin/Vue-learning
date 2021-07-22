@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>v-if指令和v-show指令</title>
+		<script type="text/javascript" src="./vue.js"></script>
+	</head>
+	<body>
+		
+		<div id="box">
+			<!-- v-show指令的作用是控制标签的显示和隐藏，它会在标签上添加display属性 -->
+			<!-- 当v-show为false时，display=none -->
+			<!-- 当v-show为true时，会删除display属性 -->
+			<div v-show="myShow">动态显示与隐藏</div>
+			
+			<!-- v-if指令的作用是删除或创建该标签，它是真的把标签创建或删除 -->
+			<!-- 当v-if为false时，删除该标签 -->
+			<!-- 当v-if为true时，创建该标签 -->
+			<div v-if="myIf">动态创建与删除</div>
+		</div>
+		
+		<script type="text/javascript">
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",      //el写的是谁要被vue渲染
+				
+				//在 data 对象中定义状态
+				data: {
+					myShow: true,
+					myIf: true,
+				}    //这里myShow、myIf称为变量或者有种新叫法(状态),一般叫做状态
+			});
+			
+			/*
+				上面的 v-show 和 v-if 的效果可以通过浏览器的控制台来观察和操作其值得改变
+			*/
+		</script>
+	</body>
+</html>

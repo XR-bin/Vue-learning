@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue插值</title>
+		<script type="text/javascript" src="./vue.js"></script>
+	</head>
+	<body>
+		<div id="box">
+			{{10 + 20}}
+			{{10 > 20 ? "aaa" : 'bbb'}}  <!-- 这里aaa和bbb必须被''或"" , 不然会被Vue当成变量(这里我们叫状态) -->
+			{{myHTML}}
+			
+			
+			<!-- 【注】使用v-html时一定要小心XSS攻击，需要谨慎 -->
+			<div v-html="myHTML"></div>    <!-- 这里的v-html是属性，但在这一般用另一种叫法(指令) -->
+			<div v-html="myTEXT"></div>    <!-- v-html也是支持支持逻辑运算 -->
+			
+			<!-- v-text 和 {{}}效果是一样的，可接受支持逻辑运算，不对HTML标签进行解析 -->
+			<div v-text="myHTML"></div>
+			<div v-text="myTEXT"></div>
+		</div>
+		
+		<script type="text/javascript">
+			//new Vue 必须写，初始Vue是重点
+			new Vue({
+				el: "#box",      //el写的是谁要被vue渲染
+				
+				//在 data 对象中定义状态
+				data: {
+					myHTML: "<b>这是一个b标签<b>",      //标签不会被解析
+					myTEXT: 10 > 20 ? "aaa" : 'bbb',
+				}     //这里myHTML、myTEXT称为变量或者有种新叫法(状态),一般叫做状态
+			})
+			
+			/*
+				插值：
+					1、{{}} 
+					2、v-html
+					3、v-text
+			*/
+		</script>
+	</body>
+</html>
