@@ -10,6 +10,7 @@
 			.a.b{background-color: green;}
 			.a{background-color: red;}
 			.b{background-color: blue;}
+			.c{background-color: yellow;}
 		</style>
 		<script type="text/javascript" src="./vue.js"></script>
 	</head>
@@ -18,8 +19,8 @@
 		<div id="box">
 			<!-- 在vue里的class写法是:class,通过改变:class来改变标签的class -->
 			<div :class="isActive ? 'red' : 'blue'">我是动态绑定class-三目写法</div>
-			<div :class="classObj">我是动态绑定class-对象写法</div>
-			
+			<div :class="classObj">我是动态绑定class-对象写法</div>     <!-- 如果用对象写法的话，在控制台给这个对象添加新属性，虽然能添加，但却无法使用，这个是能解决，等后期会讲到 -->
+			<div :class="classArr">我是动态绑定class-数组写法</div>     <!-- 数组写法可以避免对象写法上面说的的缺陷 -->
 			
 			<!-- 在vue里的onclick的写法是@click，通过给@click赋值事件函数，来给onclick添加指定的事件函数 -->
 			<button @click="clickHandler">按钮</button>
@@ -36,7 +37,8 @@
 					classObj: {
 						a: true,
 						b: true
-					}
+					},
+					classArr: ['a', 'b']
 				},      //这里isActive称为变量或者有种新叫法(状态),一般叫做状态
 				
 				
