@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue的条件渲染</title>
+		<script type="text/javascript" src="./vue.js"></script>
+	</head>
+	<body>
+		<div id="box">
+			<!--
+				这一节的主角是v-if 、 v-else  、v-else-if   这三个指令
+				乍一看是不是很像我们的编程语言语法中的if  、  else   、  else if
+				其实他们的效果就是一样的，都是判断符不符合条件的
+				
+				v-if 、 v-else  、v-else-if都是有删除和创建标签的作用的
+			-->
+			
+			<!-- 通过控制台去修改isActive就能看出效果了 -->
+			<div v-if="isActive">11111111</div>
+			<div v-else>222222222</div>
+			
+			<div v-if="myData==1">哈哈哈，我的数据是1</div>
+			<div v-else-if="myData==2">呵呵呵，我的数据居然是2</div>
+			<div v-else>哎，我的数据不是1也不是2</div>
+				
+			</div>
+				
+			</div>
+			
+		</div>
+		
+		<script type="text/javascript">
+			// vue    /v ju/
+			// data   /deɪtə/
+			// methods      /ˈmeθədz/
+			
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",   //el写的是谁要被vue渲染
+				
+				//在 data 对象中定义状态
+				data: {
+					isActive: true,
+					myData: 1
+				},
+			});
+		</script>
+	</body>
+</html>

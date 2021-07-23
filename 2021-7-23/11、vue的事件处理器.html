@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue的事件处理器</title>
+		<script type="text/javascript" src="./vue.js"></script>
+	</head>
+	<body>
+		<div id="box">
+			<!-- 
+				vue的事件处理器 ： @ + 事件 = "处理函数"
+			-->
+			<!-- 直接赋值函数名 -->
+			<button @click="clickHandler">按键1</button>
+			<!-- 带括号的可以传参数 -->
+			<button @click="clickHandler()">按键2</button>
+			<!-- 如果逻辑简单可以直接把代码写在内联中，但不建议这么做，我们必须遵守分离规则，不要混写 -->
+			<button @click="test = !test">按键3</button>
+			<p v-show="test">阿巴阿巴阿巴阿巴阿巴<p>
+		</div>
+		
+		
+		<script type="text/javascript">
+			// vue    /v ju/
+			// data   /deɪtə/
+			// methods      /ˈmeθədz/
+		
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",   //el写的是谁要被vue渲染
+				
+				//在 data 对象中定义状态
+				data: {
+					test: true
+				},
+				
+				// 在 methods 对象中定义方法
+				methods: {
+					clickHandler(){
+						this.test = ! this.test
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

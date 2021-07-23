@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue的列表过滤应用</title>
+		<script type="text/javascript" src="./vue.js"></script>
+	</head>
+	<body>
+		<div id="box">
+			<!-- 
+				添加点击事件 ：@ + 事件名
+				v-model指令 ：数据双向绑定，即text的value发生改变，myText也会跟着变化
+			-->
+			<input type="text" @input="inputHandler" v-model="myText" />
+			<ul>
+				<li v-for="item in arrList">
+					{{item}}
+				</li>
+			</ul>
+		</div>
+		
+		<script type="text/javascript">
+			// vue    /v ju/
+			// data   /deɪtə/
+			// methods      /ˈmeθədz/
+			
+			
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",   //el写的是谁要被vue渲染
+				
+				//在 data 对象中定义状态
+				data: {
+					myText: "",
+					arrList: ["aaa", "bbb", "ccc", "ddd", "abc", "cee", "eed"],
+					list: ["aaa", "bbb", "ccc", "ddd", "abc", "cee", "eed"]
+				},
+				
+				
+				// 在 methods 对象中定义方法
+				methods: {
+					inputHandler(){
+						var newArr = this.list.filter(item => item.indexOf(this.myText) > -1);
+						this.arrList = newArr;
+					}
+				}
+			});
+			
+		</script>
+	</body>
+</html>

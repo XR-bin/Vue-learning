@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue的列表渲染</title>
+		<script type="text/javascript" src="./vue.js"></script>
+	</head>
+	<body>
+		
+		<!-- 
+			这节的主角是v-for(...in...) 和 v-for(...of...)指令
+			看到这格式，我们又想起了js语法中遇到过得 for...in 和 for...of
+			
+			for...in的第一个变量是数组的下标，for...of的第一个变量是数组的值
+			
+			而v-for(...in...) 和 v-for(...of...)的第一个变量都是数组的值
+			v-for(...in...) 和 v-for(...of...)都支持遍历对象
+			
+			如果需要下标的话，可以写成这样v-for((... , ...)in...) 和 v-for((... , ...)of...)
+			第二次变量就是下标了。
+		-->
+		
+		<div id="box">
+			<!-- 遍历数组 -->
+			
+			<!-- v-for(...in...) -->
+			<ul>
+				<li v-for="item in arrList">
+					{{item}}
+				</li>
+			</ul>
+			
+			<!-- v-for(...of...) -->
+			<ul>
+				<li v-for="item of arrList">
+					{{item}}
+				</li>
+			</ul>
+			
+			<!-- 遍历对象 -->
+			
+			<!-- v-for(...in...) -->
+			<ul>
+				<li v-for="item in objList">
+					{{item}}
+				</li>
+			</ul>
+			
+			<!-- v-for(...of...) -->
+			<ul>
+				<li v-for="item of objList">
+					{{item}}
+				</li>
+			</ul>
+			
+			
+			
+			
+			
+			<!-- v-for((... , ...)in...) 和 v-for((... , ...)of...) -->
+			<ul>
+				<li v-for="(item, index) in arrList">
+					{{item}}--{{index}}
+				</li>
+			</ul>
+			
+			<ul>
+				<li v-for="(item, index) of arrList">
+					{{item}}--{{index}}
+				</li>
+			</ul>
+			
+			<ul>
+				<li v-for="(item, index) of objList">
+					{{item}}--{{index}}
+				</li>
+			</ul>
+			<ul>
+				<li v-for="(item, index) of objList">
+					{{item}}--{{index}}
+				</li>
+			</ul>
+			
+			
+		</div>
+		
+		<script type="text/javascript">
+			// vue    /v ju/
+			// data   /deɪtə/
+			// methods      /ˈmeθədz/
+			
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",      //el写的是谁要被vue渲染
+				
+				//在 data 对象中定义状态
+				data: {
+					arrList: ["01","02","03","04","05"],
+					objList: {
+						name: "小明",
+						sex: "男",
+						age: 18
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

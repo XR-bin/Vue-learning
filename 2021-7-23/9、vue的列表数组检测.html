@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue的列表数组检测</title>
+		<script type="text/javascript" src="./vue.js"></script>
+	</head>
+	<body>
+		
+		<!--
+			这一节注意是讨论，在控制台通过一些数组的方法改变数组后页面的变化，及Vue对数据更新的检测
+			
+			1、使用下面的方法操作数组，可以vue检测到变动，从而更新页面
+			push()、pop()、shift()、unshift()、splice()、sort()、reverse()
+			
+			2、使用下面方法，通过新数组替换旧数组也会被vue检测到变动
+			filter()、concat()、slice()、map()
+			
+			3、不能检测以下数组变动方式
+				myVue.array[index] = newValue
+				
+				解决方法
+					1)Vue.set(myVue.array, index, newValue)    【注】myVue是我接收new Vue()的变量
+					2)splice
+					
+				Vue.set方法可以解决之前 class-对象写法 和 style-对象写法 出现的新加对象Vue无法检测到的问题
+		-->
+		
+		<div id="box">
+			<li v-for="item in arrList">
+				{{item}}
+			</li>
+			<div :style="styleObj">我是动态绑定style-对象写法</div> 
+		</div>
+		
+		<script type="text/javascript">
+			// vue    /v ju/
+			// data   /deɪtə/
+			// methods      /ˈmeθədz/
+			
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",     //el写的是谁要被vue渲染
+				
+				//在 data 对象中定义状态
+				data: {
+					arrList: ["01", "02", "03", "04", "05"],
+					styleObj: {
+						backgroundColor: "red",
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

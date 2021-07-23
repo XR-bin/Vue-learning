@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue的事件修饰符</title>
+		<script type="text/javascript" src="./vue.js"></script>
+	</head>
+	<body>
+		
+		<!--  
+			$event : 事件对象，vue规定的，不可以是其他值
+			
+			事件修饰符
+				事件.stop  ：  阻止冒泡产生
+				事件.prevent ： 阻止标签默认行为
+				事件.self ： 阻止冒泡导致自身事件触发(非本身触发的情况下不执行事件处理函数)
+				事件.once :  事件触发只执行一次，执行完就解绑
+				
+				按键事件专有的修饰符
+					按键事件.按键名或按键值  ： 只有按下对应的按键才会触发该按键事件
+					例如
+						keyup.enter     当按键按下回车键时，才会触发keyup事件
+		-->
+		
+		<div id="box">
+			<!-- 出现冒泡情况 -->
+			<ul @click="clickUlHandler">
+				<li @click="clickLiHandler1($event)">11111</li>
+				<li>22222</li>
+				<li>33333</li>
+			</ul>
+			
+			<br />
+			
+			<!-- .stop修饰符：阻止事件冒泡 -->
+			<ul @click="clickUlHandler">
+				<li @click.stop="clickLiHandler1">11111</li>
+				<li @click="clickLiHandler2">22222</li>
+				<li>33333</li>
+			</ul>
+			
+			<!-- a正常情况下会执行默认行为 -->
+			<a href="https://www.baidu.com/">百度1</a>
+			<!-- .prevent修饰 ： 阻止标签默认行为 -->
+			<a href="https://www.baidu.com/" @click.prevent="clickAHandler()">百度1</a>
+			
+			<br />
+			
+			<!-- .self ： 阻止冒泡导致自身事件触发(非本身触发的情况下不执行事件处理函数) -->
+			<ul @click.self="clickUlHandler">
+				<li @click.stop="clickLiHandler1">11111</li>
+				<li @click="clickLiHandler2">22222</li>
+				<li>33333</li>
+			</ul>
+			
+			<!-- .once :  事件触发只执行一次，执行完就解绑 -->
+			<ul>
+				<li @click.once="clickLiHandler1">11111</li>
+			</ul>
+			
+			<!-- 按键事件.按键名或按键值  ： 只有按下对应的按键才会触发该按键事件 -->
+			<input type="text" @keyup.enter="keyupHandler1" /><br />
+			<input type="text" @keyup.w="keyupHandler1" /><br />  <!-- 按下w触发 -->
+			<input type="text" @keyup.65="keyupHandler1" /><br />  <!-- 按下A触发 -->
+			<!-- 使用原生js实现上面vue的修饰符效果 -->
+			<input type="text" @keyup.enter="keyupHandler2($event)" />
+			
+		</div>
+		
+		
+		<script type="text/javascript">
+			// vue    /v ju/
+			// data   /deɪtə/
+			// methods      /ˈmeθədz/
+			
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",   //el写的是谁要被vue渲染
+				
+				//在 data 对象中定义状态
+				data: {
+		
+				},
+				
+				// 在 methods 对象中定义方法
+				methods: {
+					clickUlHandler(){
+						alert("ul");
+					},
+					
+					clickLiHandler1(ev){
+						//使用事件对象的方法阻止冒泡,这里只是提一下，不是本节的重点
+						// ev.stopPropagation();
+						
+						alert("li1");
+					},
+					
+					clickLiHandler2(){
+						alert("li2");
+					},
+					
+					clickAHandler(ev){
+						//使用事件对象的方法阻止标签默认行为,这里只是提一下，不是本节的重点
+						// ev.preventDefault();
+						alert("默认行为被阻止了");
+					},
+					
+					keyupHandler1(){
+						alert("输入结束1");
+					},
+					
+					keyupHandler2(ev){
+						if(ev.keyCode === 13){
+							alert("输入结束2")
+						}
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

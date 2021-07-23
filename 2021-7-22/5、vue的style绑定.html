@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue的style绑定</title>
+		<script type="text/javascript" src="./vue.js"></script>
+	</head>
+	<body>
+		
+		<div id="box">
+			<!-- 在vue里的style写法是:style,通过改变:style来改变标签的style -->
+			<div :style="'background:' + (isActive ? 'red' : 'blue')">我是动态绑定style-三目写法</div>
+			
+			<!-- 【注】js语法中不能带-，所以object中的属性名不能写成background-color ， 但可以采用驼峰命名的方式写(backgroundColor) -->
+			<div :style="styleObj">我是动态绑定style-对象写法</div>     <!-- 如果用对象写法的话，在控制台给这个对象添加新属性，虽然能添加，但却无法使用，这个是能解决，等后期会讲到 -->
+		
+			<!-- 重复添加同种样式不同值，前面的样式值会被后面覆盖掉 -->
+			<div :style="styleArr">我是动态绑定style-数组写法</div>
+		</div>
+		
+		<script type="text/javascript">
+			// vue    /v ju/
+			// data   /deɪtə/
+			// methods      /ˈmeθədz/
+		
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",     //el写的是谁要被vue渲染
+				
+				//在 data 对象中定义状态
+				data:{
+					isActive: true,
+					styleObj: {
+						backgroundColor: "red",
+					},
+					styleArr: []
+				},           //这里isActive称为变量或者有种新叫法(状态),一般叫做状态
+			});
+		</script>
+	</body>
+</html>
