@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue的表单修饰符</title>
+		<script type="text/javascript" src="./vue.js"></script>
+	</head>
+	<body>
+		
+		<div id="box">
+			<!--  
+				.lazy 作用：失去焦点时才同步value与v-model的数据
+			-->
+			<input type="text" v-model="myText1">   <!-- 未使用lazy -->
+			{{myText1}}<br/>
+			<input type="text" v-model.lazy="myText2">    <!-- 使用lazy -->
+			{{myText2}}<br/>
+			
+			<br/>
+			
+			<!-- 
+				.number 作用： 阻止数字出现第一个非数字以后的字符与v-model同步，即value为123a4156，v-model只同步123
+				
+				这个.number的作用有个前提，必须第一个字符是数字，否则就失效
+			-->
+			<input type="text" v-model="myNumber1">   <!-- 未使用number -->
+			{{myNumber1}}<br/>
+			<input type="text" v-model.number="myNumber2">    <!-- 使用number -->
+			{{myNumber2}}<br/>
+			
+			<br/>
+			
+			<!--  
+				.trim 作用 ： 去除文本value中首尾的所有空格
+			-->
+			<input type="text" v-model="myBlank1">   <!-- 未使用trim -->
+			|{{myBlank1}}|<br/>
+			<input type="text" v-model.trim="myBlank2">    <!-- 使用trim -->
+			|{{myBlank2}}|<br/>
+		</div>
+		
+		
+		
+		<script type="text/javascript">
+			// vue    /v ju/
+			// data   /deɪtə/
+			// methods      /ˈmeθədz/
+			
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",       //el写的是谁要被vue渲染
+				
+				//在 data 对象中定义状态
+				data: {
+					myText1: "",
+					myText2: "",
+					myNumber1: "",
+					myNumber2: "",
+					myBlank1: "",
+					myBlank2: ""
+				}
+			});
+		</script>
+	</body>
+</html>

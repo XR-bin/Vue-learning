@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue的表单控件绑定</title>
+		<script type="text/javascript" src="./vue.js"></script>
+	</head>
+	<body>
+		<div id="box">
+			<!--
+				v-model指令 ：数据双向绑定，即text的value发生改变，myText也会跟着变化
+			-->
+			<input type="text" v-model="myText" /><br/>
+			{{myText}}<br/>
+			<textarea v-model="myText"></textarea><br/>
+			<input type="checkbox" v-model="myCheckbox"/><br/>
+			{{myCheckbox}}
+			
+			<p>
+				<!-- 
+					多选项
+						v-model是数组时，与value搭配有神奇的效果
+				-->
+				你喜欢的运动是
+				<input type="checkbox" v-model="checkArr" value="游泳"/>游泳
+				<input type="checkbox" v-model="checkArr" value="跑步"/>跑步
+				<input type="checkbox" v-model="checkArr" value="足球"/>足球
+				<br/>
+				{{checkArr}}
+			</p>
+			
+			<p>
+				<!-- 
+					单选项
+				-->
+				你最喜欢的编程语言是
+				<input type="radio" v-model="myRadio" value="PHP" />PHP
+				<input type="radio" v-model="myRadio" value="JavaScript" />JavaScript
+				<input type="radio" v-model="myRadio" value="java" />java
+				<input type="radio" v-model="myRadio" value="C" />C
+				<br/>
+				{{myRadio}}
+			</p>
+			
+		</div>
+		
+		
+		<script type="text/javascript">
+			// vue    /v ju/
+			// data   /deɪtə/
+			// methods      /ˈmeθədz/
+			
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",    //el写的是谁要被vue渲染
+				
+				//在 data 对象中定义状态
+				data:{
+					myText: "",
+					myCheckbox: false,
+					checkArr: [],
+					myRadio: ""
+				}
+			});
+		</script>
+	</body>
+</html>

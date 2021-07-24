@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue练习-购物车</title>
+		<script type="text/javascript" src="./vue.js"></script>
+	</head>
+	<body>
+		
+		<div id="box">
+			<ul>
+				<input type="checkbox" v-model="isAll" @change="changeAllHandler">全选
+				<li v-for="mydata in arrList">
+					<!-- 
+						v-model指令 ：数据双向绑定，即text的value发生改变，myText也会跟着变化
+						:value ： 这个是vue的属性，如果用普通的value的话他会把mydata当成普通字符串，:value会寻找对应的mydata状态
+					-->
+					<input type="checkbox" v-model="checkArr" :value="mydata" @change="changeHandler" />{{mydata}}
+					<button @click="clickHandler(mydata)">-<button>
+					{{mydata.number}}
+					<button @click="mydata.number++">+</button>
+				</li>
+			</ul>
+			
+			{{checkArr}}
+			
+			<!-- 
+				函数调用也算是一种表达式，所以{{}}里面可以填写函数，但要记住函数得加()，否则会被当成状态对待
+			-->
+			<p>总金额计算：{{getSum()}}</p>
+			
+		</div>
+		
+		
+		<script type="text/javascript">
+			// vue    /v ju/
+			// data   /deɪtə/
+			// methods      /ˈmeθədz/
+			
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",     //el写的是谁要被vue渲染
+				
+				//在 data 对象中定义状态
+				data: {
+					arrList: [
+						{
+							name: "商品1",
+							price: 10,
+							number: 10,
+							id: "1"
+						},
+						
+						{
+							name: "商品2",
+							price: 20,
+							number: 20,
+							id: "2"
+						},
+						
+						{
+							name: "商品3",
+							price: 30,
+							number: 30,
+							id: "3"
+						}
+					],
+					
+					checkArr: [],
+					isAll: false
+				},
+				
+				// 在 methods 对象中定义方法
+				methods: {
+					//Vue做了一个很特别的处理。
+					//当某个状态内部的值发生改变时，
+					//Vue会寻找有使用该状态的所有函数，并让这些函数重新执行一遍(也就是刷新)
+					getSum(){
+						var sum = 0;
+						for(let i in this.checkArr){
+							sum += this.checkArr[i].price * this.checkArr[i].number;
+						}
+						return sum;
+					},
+					
+					changeAllHandler(){
+						if(this.isAll){
+							//这里vue进行了神奇操作，如果用pop方法操作checkArr，arrList必定受影响，
+							//但通过复选框的v-model来改变checkArr，却不影响arrList
+							this.checkArr = this.arrList;
+						}
+						else{
+							this.checkArr = [];
+						}
+					},
+					
+					changeHandler(){
+						if(this.checkArr.length === this.arrList.length){
+							this.isAll = true;
+						}
+						else{
+							this.isAll = false;
+						}
+					},
+					
+					clickHandler(data){
+						if(data.number > 1){
+							data.number--;
+						}
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
