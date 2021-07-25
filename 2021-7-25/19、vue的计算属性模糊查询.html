@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue的计算属性模糊查询</title>
+		<script type="text/javascript" src="./vue.js"></script>
+	</head>
+	<body>
+		<div id="box">
+			<input type="text" v-model="myText" />
+			<ul>
+				<li v-for="item in getMyArrList">
+					{{item}}
+				</li>
+			</ul>
+		</div>
+		
+		<script type="text/javascript">
+			// vue    /v ju/
+			// data   /deɪtə/
+			// methods      /ˈmeθədz/
+			// computed     /kəmˈpjuːtɪd/
+			
+			
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",   //el写的是谁要被vue渲染
+				
+				//在 data 对象中定义状态
+				data: {
+					myText: "",
+					arrList: ["aaa", "bbb", "ccc", "ddd", "abc", "cee", "eed"],
+				},
+				
+				
+				// 在 methods 对象中定义方法
+				methods: {
+				},
+				
+				//在 computed 对象中定义的是计算属性
+				computed: {
+					getMyArrList(){
+						return this.arrList.filter(data => data.indexOf(this.myText) > -1);
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

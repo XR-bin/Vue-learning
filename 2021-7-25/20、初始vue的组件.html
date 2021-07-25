@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>初始vue的组件</title>
+		<script type="text/javascript" src="./vue.js"></script>
+	</head>
+	<body>
+		<div id="box">
+			<navbar></navbar>
+			<navbar2></navbar2>
+		</div>
+		
+		
+		<script type="text/javascript">
+			// vue    /v ju/
+			// data   /deɪtə/
+			// methods      /ˈmeθədz/
+			// computed     /kəmˈpjuːtɪd/
+			// component    /kəmˈpəʊnənt/
+			// template     /ˈtempleɪt/
+			
+			
+			/*
+				组件是可复用的 Vue 实例，且带有一个名字
+				我们可以在一个通过 new Vue 创建的 Vue 根实例中，把这个组件作
+				为自定义元素来使用(也可以理解为自创一个双标签来使用)
+				
+				【注】全局组件必须写在new Vue()之前
+			*/
+			//component创建一个全局组件,第一个参数是组件名,参数2是组件内容
+			Vue.component("navbar", {
+				//template放组件html部分的内容
+				template: `
+					<div style="background:yellow">
+						<button @click="clickHandler()">返回</button>
+						这是我们创建的组件navbar
+						<button>首页</button>
+						<br/>
+						<child></child>
+						<navbarChild></navbarChild>
+					</div>`,
+				
+				//组件 在 methods 对象中定义方法
+				methods:{
+					clickHandler(){
+						alert("这是navbar");
+					}
+				},
+				
+				//在组件内部的components里可以创建私有儿子组件
+				components: {
+					navbarChild: {
+						template:`
+							<div style="background:red">
+								这是我的私有组件
+							</div>`
+					}
+				}
+			});
+			
+			/*
+				知识点补充：
+					下面new Vue是根组件，上面的navbar在id为box的div中被调用，而这个div是根组件的根模板
+					所以navbar是根组件的儿子组件。在我们自定的navbar也可以调用其他组件，此时这个其他组件
+					就成为navbar的儿子组件了，而这个根组件就是它的爷爷组件了
+			*/
+			
+			// 在这里child组件是navbar组件和navbar2组件的公共儿子组件
+			Vue.component("child", {
+				template: `<div style="background: green">这是child组件</div>`
+			})
+			
+			// 这里的navbar2和navbar组件算是兄弟组件
+			Vue.component("navbar2", {
+				template:`
+					<div style="background:blue"> 
+						这是navbar2组件
+						<child></child>
+					</div>`
+			})
+			
+			
+			
+			
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",       //el写的是谁要被vue渲染
+				
+				//在 data 对象中定义状态
+				data: {
+				},
+				
+				
+				// 在 methods 对象中定义方法
+				methods: {
+				},
+			});
+			
+		</script>
+	</body>
+</html>

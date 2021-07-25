@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>axios简单使用</title>
+		<script type="text/javascript" src="./vue.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	</head>
+	<body>
+		<!--
+			这个必须在服务器上运行才能看到效果
+		-->
+		<div id="box">
+			<button @click="clickHandler">axios获取数据</button>
+			<ul>
+				<li v-for="item in dataList">
+					<h2>{{item.name}}</h2>
+					<!-- 
+						:src表示的是vue里的属性，和普通src一样，但普通src不能
+						识别item.poster代表的数据，而是直接把item.poster当成字符串 ，
+						而vue的:src能够识别出来
+					-->
+					<img :src="item.poster" />
+				</li>
+			</ul>
+		</div>
+		
+		
+		<script type="text/javascript">
+			// vue    /v ju/
+			// data   /deɪtə/
+			// methods      /ˈmeθədz/
+			
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",       //el写的是谁要被vue渲染
+				
+				//在 data 对象中定义状态
+				data: {
+					dataList: []
+				},
+				
+				
+				// 在 methods 对象中定义方法
+				methods: {	
+					clickHandler(){
+						axios.get("./json/test.json").then(res=>{
+							console.log(res.data.data.films) // axios 自动包装data属性 res.data
+							this.dataList = res.data.data.films
+						}).catch(err=>{console.log(err);});
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
