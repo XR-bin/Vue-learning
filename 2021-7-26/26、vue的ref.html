@@ -2,17 +2,68 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<title>vue的ref通信</title>
+		<script type="text/javascript" src="./vue.js"></script>
 	</head>
 	<body>
-		
+		<div id="box">
+			<input type="text" ref="mytext" />
+			<mymodle ref="refmodle"></mymodle>
+			{{vueData}}<br/>
+			<button @click="addHandler()">ref测试</button>
+		</div>
 		
 		<script type="text/javascript">
+			// vue    /v ju/
+			// data   /deɪtə/
+			// methods      /ˈmeθədz/
+			// computed     /kəmˈpjuːtɪd/
+			// component    /kəmˈpəʊnənt/
+			// template     /ˈtempleɪt/
+			// props         /prɒps/
+			// emit          /iˈmɪt/
 			/*
 					ref 被用来给元素或子组件注册引用信息。引用信息将会注册在父组件的 $refs 对象
 				上。如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；如果用在子组件上，引用
 				就指向组件
+				
+				1、ref放在标签上，拿到的是原生节点
+				2、ref放在组件上，拿到的是组件对象
 			*/
+			Vue.component("mymodle", {
+				//template放组件html部分的内容
+				template:`
+					<div>
+						chile
+					</div>`,
+					
+				//在 data 对象中定义状态, 【注】组件可以有data，但data必须是个函数
+				data(){
+					return {
+						modleData:"子组件状态"
+					}
+				}
+			});
+			
+			
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",
+				
+				//在 data 对象中定义状态
+				data: {
+					vueData:"还未收到子组件状态"
+				},
+				
+				// 在 methods 对象中定义方法
+				methods: {
+					addHandler(){
+						//$refs说明：一个对象，持有注册过 ref 属性的所有 DOM 元素和组件实例。
+						console.log("111", this.$refs.mytext.value);
+						this.vueData=this.$refs.refmodle.modleData;
+					}
+				}
+			});
 		</script>
 	</body>
 </html>

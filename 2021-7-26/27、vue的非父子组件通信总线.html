@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue的非父子组件通信总线</title>
+		<script type="text/javascript" src="./vue.js"></script>
+	</head>
+	<body>
+		<div id="box">
+			<module1></module1>
+			<module2></module2>
+		</div>
+		
+		
+		<script type="text/javascript">
+			// vue    /v ju/
+			// data   /deɪtə/
+			// methods      /ˈmeθədz/
+			// computed     /kəmˈpjuːtɪd/
+			// component    /kəmˈpəʊnənt/
+			// template     /ˈtempleɪt/
+			// props         /prɒps/
+			// emit          /iˈmɪt/
+			
+			var bus = new Vue();     //空vue实例，就是事件中央总线
+			
+			//【注】全局组件必须写在new Vue()之前
+			//component创建一个全局组件,第一个参数是组件名(不能出现大写字母),参数2是组件内容(是个对象)
+			Vue.component("module1", {
+				//template放组件html部分的内容
+				template:`
+					<div style="background: blue">
+						我是一个发布者
+						<input type="text" ref="mytext" />
+						<button @click="clickHandler">发布</button>
+					</div>`,
+					
+				methods: {
+					clickHandler(){
+						// $emit:触发当前实例上的事件。附加参数都会传给监听器回调。
+						bus.$emit("myreceive", this.$refs.mytext.value);
+					}
+				}
+			});
+			
+			//【注】全局组件必须写在new Vue()之前
+			//component创建一个全局组件,第一个参数是组件名(不能出现大写字母),参数2是组件内容(是个对象)
+			Vue.component("module2", {
+				//template放组件html部分的内容
+				template:`
+					<div style="background: green">
+						我是一个接受者
+					</div>`,
+				
+				//生命周期函数*当前组件的dom被创建完成时就会被调用
+				mounted(){
+					/* 
+						监听当前实例上的自定义事件。事件可以由 vm.$emit 触发。
+						回调函数会接收所有传入事件触发函数的额外参数。
+					*/
+					bus.$on("myreceive", (textData)=>{
+						console.log("收到发布者发布的信息啦");
+						alert(textData);
+					})
+				}
+			});
+			
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",
+				
+				//在 data 对象中定义状态
+				data: {},
+				
+				// 在 methods 对象中定义方法
+				methods:{}
+			});
+		</script>
+	</body>
+</html>
