@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue的动态组件</title>
+		<style type="text/css">
+			*{margin: 0px; padding: 0px;}
+			html,body{width: 100%; height: 100%;}
+			footer ul {display: flex; position: fixed; left: 0px; bottom: 0px; width: 100%; height: 40px;}
+			footer ul li {flex: 1; text-align: center; list-style: none; height: 40px; line-height: 40px; background: gray;}
+		</style>
+		<script type="text/javascript" src="./vue.js"></script>
+	</head>
+	<body>
+		<div id="box">
+			<keep-alive>
+				<component :is="who"></component>
+			</keep-alive>
+			<footer>
+				<ul>
+					<li><a @click="who='home'">首页</a></li>
+					<li><a @click="who='list'">列表页</a></li>
+					<li><a @click="who='shopcar'">购物车页</a></li>
+				</ul>
+			</footer>
+		</div>
+		
+		
+		<script type="text/javascript">
+			// vue    /v ju/
+			// data   /deɪtə/
+			// methods      /ˈmeθədz/
+			// computed     /kəmˈpjuːtɪd/
+			// component    /kəmˈpəʊnənt/
+			// template     /ˈtempleɪt/
+			// props         /prɒps/
+			// emit          /iˈmɪt/
+			// keep-alive    /kiːp   əˈlaɪv /
+			
+			
+			/* 
+				动态组件
+					<component>元素，动态地绑定多个组件到它的is属性
+					<keep-alive>保留状态，避免重新渲染
+			*/
+		   
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",//el写的是谁要被vue渲染
+				
+				//在 data 对象中定义状态
+				data: {
+					who: "home"
+				},
+				
+				//在 components 中创建私有组件
+				components:{
+					"home": {
+						template:`<div>home<input type="text"/></div>`
+					},
+					
+					"list": {
+						template:`<div>list</div>`
+					},
+					
+					"shopcar": {
+						template:`<div>shopcar</div>`
+					}
+				}
+			});
+			
+			
+		</script>
+	</body>
+</html>
