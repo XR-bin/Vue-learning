@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>vue的单个元素过度</title>
+		<title>vue的多个列表过渡</title>
 		<style type="text/css">
 			/* myeffect是我自定义的，-enter-active 和 -leave-active 是固定格式*/
 			.myeffect-enter-active, .myeffect-leave-active{
@@ -14,52 +14,28 @@
 				opacity: 0;     /* 透明度 */
 				transform: translateX(200px);     /* 运动距离 */
 			}
-			
-			
-			
-			/* CSS关键帧风格 */
-			.myeffect2-enter-active{
-				animation: bounce-in 0.5s;
-			}
-			
-			.myeffect2-leave-active{
-				animation: bounce-in 0.5s reverse;
-			}
-			
-			@keyframes bounce-in{
-				0% {
-					opacity: 0;     /* 透明度 */
-					transform: translateX(200px);     /* 运动距离 */
-				}
-				
-				100$ {
-					opacity: 1;     /* 透明度 */
-					transform: translateX(0px);     /* 运动距离 */
-				}
-			}
 		</style>
 		<script type="text/javascript" src="./vue.js"></script>
 	</head>
 	<body>
+		
 		<div id="box">
-			<button @click="isShow = !isShow">按钮</button>
-			<!--  
-				transition过渡
-					Vue在插入、更新或者移除DOM时，提供多种不同样式的应用过渡效果
-					
-					单元素/组件过渡
-						*CSS样式
-						*CSS动画
-						*结合animate.css动画库
-						
-			-->
-			<transition name="myeffect">
-				<div v-show="isShow">1111111111</div>
-			</transition>
+			<input type="text" v-model="mytext" />{{mytext}}
+			<button @click="clickHandler1">add</button>
 			
-			<transition name="myeffect2">
-				<div v-show="isShow">222222222</div>
-			</transition>
+			<!--  
+				列表过渡(设置key)
+					<transition-group> 不同于 <transition>，它会以一个真实元素呈现，默认为一个<span>。
+					你也可以通过tag特性更换为其他元素
+				
+					列表项需提供唯一的key属性值，以便区分列表项(下面直接用列表值只是为了应付实验，尽量用列表项的id)
+			-->
+			<transition-group tag="ul" name="myeffect">
+				<li v-for="(data, index) in datalist" :key=data>
+					{{data}} ---- {{index}}
+					<button @click="clickHandler2(index)">del</button>
+				</li>	
+			</transition-group>
 		</div>
 		
 		
@@ -78,11 +54,23 @@
 			
 			//new Vue 必须写，初始Vue是重点
 			var v = new Vue({
-				el: "#box",   //el写的是谁要被vue渲染
+				el: "#box",    //el写的是谁要被vue渲染
 				
 				//在 data 对象中定义状态
 				data: {
-					isShow: false
+					datalist: [],
+					mytext: ""
+				},
+				
+				// 在 methods 对象中定义方法
+				methods: {
+					clickHandler1(){
+						this.datalist.push(this.mytext);
+					},
+					
+					clickHandler2(index){
+						this.datalist.splice(index, 1);
+					}
 				}
 			});
 		</script>
