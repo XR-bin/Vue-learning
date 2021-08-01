@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>swiper插件封装成组件</title>
+		<link rel="stylesheet" type="text/css" href="./swiper/css/swiper.css" />
+		<script type="text/javascript" src="./swiper/js/swiper.js"></script>
+		<script type="text/javascript" src="./vue.js"></script>
+		<style type="text/css">
+			.swiper-container {
+			    width: 600px;
+			    height: 300px;
+			} 
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<mymodlue :key="datalist.length">
+				<div class="swiper-slide" v-for="data in datalist">
+					{{data}}
+				</div>
+			</mymodlue>
+		</div>
+		
+		
+		<script type="text/javascript">
+			// vue    /v ju/
+			// data   /deɪtə/
+			// mounted      /maʊntɪd/
+			// methods      /ˈmeθədz/
+			// updated      /ˌʌpˈdeɪtɪd/
+			// swiper       /'swaɪpə/ 
+			// component    /kəmˈpəʊnənt/
+			// template     /ˈtempleɪt/
+			
+			
+			//【注】全局组件必须写在new Vue()之前
+			//component创建一个全局组件,第一个参数是组件名(不能出现大写字母),参数2是组件内容(是个对象)
+			Vue.component("mymodlue", {
+				template:`
+					<div class="swiper-contatiner " + which>
+						<div class="swiper-wrapper">
+							<slot></slot>
+						</div>
+						
+						<!-- 如果需要分页器 -->
+						<div class="swiper-pagination"></div>
+					</div>`,
+					
+				//在 data 对象中定义状态, 【注】组件可以有data，但data必须是个函数
+				data(){
+					return {
+						which: "a"
+					}
+				},
+				
+				//生命周期---挂载后阶段
+				mounted() {
+					//这个Swiper必须放在指定元素在dom加载完后
+					new Swiper(".a", {
+						loop: true,
+						
+						//如果需要分页器
+						pagination: {
+							el: '.swiper-pagination'
+						}
+					});
+				}
+			});
+			
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",     //el写的是谁要被vue渲染
+				
+				//在 data 对象中定义状态
+				data: {
+					datalist: []
+				},
+				
+				//生命周期---挂载后阶段
+				mounted() {
+					setTimeout(()=>{
+						this.datalist = ["11111", "22222", "33333"];  // 状态改为，异步更新dom
+					}, 2000);
+				}
+			});
+		</script>
+	</body>
+</html>

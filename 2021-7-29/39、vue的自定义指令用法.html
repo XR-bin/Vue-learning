@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue的自定义指令用法</title>
+		<script type="text/javascript" src="./vue.js"></script>
+	</head>
+	<body>
+		
+		<div id="box">
+			<div v-mycolor="'red'">这是我在测试我的自定义指令---测试1</div>
+			<div v-mycolor="'green'">这是我在测试我的自定义指令---测试1</div>
+			<div v-mycolor="mycolor">这是我在测试我的自定义指令---测试1</div>
+		</div>
+		
+		<script type="text/javascript">
+			// vue    /v ju/
+			// data   /deɪtə/
+			// updated      /ˌʌpˈdeɪtɪd/
+			// directive    /dəˈrektɪv/
+			// inserted     /ɪnˈsɜːtɪd/
+			
+			//通过directive创建vue自定义指令
+			Vue.directive("mycolor", {
+				//指令-生命周期-创建
+				inserted(el, bind){
+					el.style.backgroundColor = bind.value;
+				},
+				
+				//指令-生命周期-数据更新
+				update(el, bind){
+					el.style.backgroundColor = bind.value;
+				}
+			});
+			
+			//new Vue 必须写，初始Vue是重点
+			var v = new Vue({
+				el: "#box",     //el写的是谁要被vue渲染
+				
+				//在 data 对象中定义状态
+				data: {
+					mycolor: "red"
+				}
+			});
+		</script>
+	</body>
+</html>
