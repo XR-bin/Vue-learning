@@ -1,0 +1,15 @@
+-public文件夹
+|
+-----index.html
+
+
+
+-src文件
+|
+-----App.vue
+|
+-----main.js
+
+
+
+-package.json
