@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router' // 引入路由模块组件，再我们创建这个工程时就帮我们下载好了
 import Film from '../views/Film.vue'
-import Center from '../views/Center.vue'
+// import Center from '../views/Center.vue'    // 懒加载需屏蔽
 import Cinema from '../views/Cinema.vue'
 import Detail from '../views/Detail.vue'
+// import Login from '../views/Login.vue'    // 懒加载需屏蔽
 import Nowplaying from '../views/film/Nowplaying.vue'
 import Comingsoon from '../views/film/Comingsoon.vue'
 
@@ -39,12 +40,21 @@ const myRoutes = [
 
   {
     path: '/center',
-    component: Center
+    // component: Center
+    component: () => import(/* webpackChunkName: "group-foo" */'../views/Center.vue')
   },
 
   {
     path: '/cinema',
     component: Cinema
+  },
+
+  {
+    path: '/login',
+    // 懒加载
+    // component: () => import('../views/Login.vue')
+    // 懒加载(分组)    group-foo是自定义组名
+    component: () => import(/* webpackChunkName: "group-foo" */'../views/Login.vue')
   },
 
   // {
@@ -67,8 +77,32 @@ const myRoutes = [
 ]
 
 const router = new VueRouter({
+  // 路由模式  一共有两种：hash  和  history
+  // 不写mode的情况下，默认是hash模式
+  // hash 的模式下网站格式      http://location/:8080/#/xxxx/xxxx
+  // history 的模式下网站格式   http://localhost:8080/xxxx/xxxx
+  // mode: 'history',
+
   // 如果配置变量的名字是routes的话这里就可以简写为routes
   routes: myRoutes
+})
+
+// 全局路由守卫(全局路由拦截)
+router.beforeEach((to, from, next) => {
+  const auth = ['/center', '/order', '/money', '/card']
+
+  // console.log(to)
+
+  if (auth.includes(to.fullPath)) {
+    // console.log('验证token')
+    if (!localStorage.getItem("token")) {
+      next('/login')
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

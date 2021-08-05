@@ -18,7 +18,7 @@ import tabbar from './components/Tabbar'
 
 // ES6 导出模块
 export default {
-  data () {
+  data() {
     return {
 
     }

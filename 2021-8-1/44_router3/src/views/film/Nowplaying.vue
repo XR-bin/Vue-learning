@@ -12,7 +12,7 @@
 <script type="text/javascript">
 // ES6 导出模块
 export default {
-  data () {
+  data() {
     return {
       datalist: [
         {
@@ -34,7 +34,7 @@ export default {
   },
 
   methods: {
-    clickHandler (id) {
+    clickHandler(id) {
       // 编程导航的一种方法，但我们一般不这样弄，而是用下面的另一种方法
       // location.href = "#/center"
 
