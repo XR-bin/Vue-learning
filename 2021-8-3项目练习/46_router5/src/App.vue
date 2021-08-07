@@ -5,7 +5,9 @@
       路由容器 ： router-view
       这个路由容器其实就类似一个插槽slot，专门留给路由显示的的地方
     -->
-    <router-view></router-view>
+    <section>
+      <router-view></router-view>
+    </section>
   </div>
 </template>
 
@@ -15,7 +17,6 @@
 
 <script>
 import tabbar from './components/Tabbar'
-import axios from 'axios'
 
 // ES6 导出模块
 export default {
@@ -43,16 +44,16 @@ export default {
     //   })
 
     // 3- miazuo.com
-    axios({
-      url: 'https://m.maizuo.com/gateway?cityId=110100&pageNum=1&pageSize=10&type=1&k=6033802',
-      headers: {
-        "X-Client-Info": '{"a":"3000","ch":"1002","v":"5.0.4","e":"16281333366413511454359553","bc":"110100"}',
-        "X-Host": 'mall.film-ticket.film.list'
-      }
-      // method: "get"     //不写默认是get
-    }).then(res => {
-      console.log(res.data)
-    })
+    // axios({
+    //   url: 'https://m.maizuo.com/gateway?cityId=110100&pageNum=1&pageSize=10&type=1&k=6033802',
+    //   headers: {
+    //     "X-Client-Info": '{"a":"3000","ch":"1002","v":"5.0.4","e":"16281333366413511454359553","bc":"110100"}',
+    //     "X-Host": 'mall.film-ticket.film.list'
+    //   }
+    //   // method: "get"     //不写默认是get
+    // }).then(res => {
+    //   console.log(res.data)
+    // })
   }
 }
 </script>
@@ -61,4 +62,5 @@ export default {
   *{margin: 0; padding: 0;}
   li{list-style: none;}
   div{font-size: 16px;}
+  section{margin-bottom: 50px;}
 </style>
