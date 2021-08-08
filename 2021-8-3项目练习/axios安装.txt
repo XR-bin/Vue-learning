@@ -1,1 +1,2 @@
+http插件
 cnpm i --save axios

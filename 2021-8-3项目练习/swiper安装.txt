@@ -1,1 +1,2 @@
+轮播插件
 cnpm i --save swiper
