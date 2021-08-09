@@ -1,0 +1,4 @@
+有赞组件库
+cnpm i --save vant
+按需引入该库组件的方式需要的插件 (该插件作用是用来切割代码的)
+cnpm i --save babel-plugin-import

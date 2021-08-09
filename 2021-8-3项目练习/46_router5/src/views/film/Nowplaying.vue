@@ -1,21 +1,31 @@
 <template>
   <div id="nowplaying">
-    <ul>
-      <li v-for="data in datalist" :key="data.filmId" @click="clickHandler(data.filmId)">
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="我是有底线的"
+      @load="onLoad"
+      :immediate-check = "false"
+    >
+      <van-cell v-for="data in datalist" :key="data.filmId" @click="clickHandler(data.filmId)">
         <img :src="data.poster" />
         <h3>{{data.name}}</h3>
         <p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
           主演：{{data.actors | actorFilter}}
         </p>
         <p>{{data.nation}} | {{data.runtime}}分钟</p>
-      </li>
-    </ul>
+      </van-cell>
+    </van-list>
   </div>
 </template>
 
 <script type="text/javascript">
 import axios from 'axios'
+import myhttp from '@/util/myhttp.js'    // 别名  @ => src的绝对路径
 import Vue from 'vue'
+import { List, Cell } from 'vant'
+
+Vue.use(List).use(Cell)   // 全局注册
 
 // vue过滤器
 Vue.filter('actorFilter', (actors) => {
@@ -27,11 +37,36 @@ Vue.filter('actorFilter', (actors) => {
 export default {
   data() {
     return {
-      datalist: []
+      datalist: [],
+      loading: false,  // 是否正在加载中
+      finished: false, // 是否已结束
+      current: 1,    // 记录第几页
+      total: 0       // 能加载的总数据长度
     }
   },
 
   methods: {
+    onLoad() {
+      // 1、axios请求新页面的数据
+      // 2、合并新数据到老数据
+      // 3、this.loading = false
+      if (this.datalist.length === this.total) {
+        this.finished = true
+        return
+      }
+      
+      this.current++
+      myhttp({
+        url: `/gateway?cityId=110100&pageNum=${this.current}&pageSize=10&type=1&k=6033802`,
+        headers: {
+          'X-Host': 'mall.film-ticket.film.list'
+        }
+      }).then(res => {
+        this.datalist = [...this.datalist, ...res.data.data.films]
+        this.loading = false
+      })
+    },
+    
     clickHandler(id) {
       // 编程导航的一种方法，但我们一般不这样弄，而是用下面的另一种方法
       // location.href = "#/center"
@@ -65,13 +100,14 @@ export default {
     }).then(res => {
       // console.log(res.data.data.films)
       this.datalist = res.data.data.films
+      this.total = res.data.data.total
     })
   }
 }
 </script>
 
 <style type="text/css" lang="scss" scoped>
-    li{
+    .van-list{
       overflow: hidden;
       padding: 10px;
       img{

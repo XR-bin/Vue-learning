@@ -1,0 +1,2 @@
+滚动组件better-scroll组件安装
+cnpm i --save better-scroll

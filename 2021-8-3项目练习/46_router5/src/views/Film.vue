@@ -14,7 +14,7 @@
       <li>即将上映</li>
     </ul> -->
     <!-- 只有在vue中， 组件上写的class，style会自动传到组件的根节点上 -->
-    <film-header style="position: sticky; top: 0px; background-color: white;"></film-header>
+    <film-header style="position: sticky; top: 0px; background-color: white; z-index: 100;"></film-header>
 
     <router-view></router-view>
   </div>
