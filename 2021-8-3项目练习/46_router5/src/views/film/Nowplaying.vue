@@ -50,7 +50,7 @@ export default {
       // 1、axios请求新页面的数据
       // 2、合并新数据到老数据
       // 3、this.loading = false
-      if (this.datalist.length === this.total) {
+      if (this.datalist.length === this.total && this.datalist.length !== 0) {
         this.finished = true
         return
       }

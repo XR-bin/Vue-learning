@@ -5,7 +5,8 @@
       @click-left="leftHandler()"
     >
       <template #left>
-        <span style="font-size: 18px;">上海</span><van-icon name="arrow-down" />
+        <span style="font-size: 18px;">{{ $store.state.cityName }}</span>
+        <van-icon name="arrow-down" color="black" />
       </template>
       <template #right>
         <van-icon name="search" size="24" color="black" />
