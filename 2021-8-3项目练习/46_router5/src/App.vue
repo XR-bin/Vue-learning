@@ -1,6 +1,6 @@
 <template>
   <div>
-    <tabbar></tabbar>
+    <tabbar v-show="$store.state.isTabbarShow"></tabbar>
     <!--
       路由容器 ： router-view
       这个路由容器其实就类似一个插槽slot，专门留给路由显示的的地方

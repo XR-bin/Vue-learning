@@ -3,6 +3,7 @@
     <van-nav-bar
       title="影院"
       @click-left="leftHandler()"
+      @click-right="rightHandler()"
     >
       <template #left>
         <span style="font-size: 18px;">{{ $store.state.cityName }}</span>
@@ -15,7 +16,7 @@
     
     <div class="cinema" :style="{height: height}">
       <ul>
-        <li v-for="data in cinemaList" :key="data.cinemaId">
+        <li v-for="data in $store.state.cinemaList" :key="data.cinemaId">
           <div>{{data.name}}</div>
           <div class="address">{{data.address}}</div>
         </li>
@@ -25,7 +26,6 @@
 </template>
 
 <script type="text/javascript">
-import myhttp from '@/util/myhttp'
 import BetterScroll from 'better-scroll'
 import Vue from 'vue'
 import { NavBar, Icon } from 'vant'
@@ -42,20 +42,31 @@ export default {
   
   methods: {
     leftHandler() {
+      this.$store.commit('clearCinemaList')
       this.$router.push('/city')
+    },
+    
+    rightHandler() {
+      this.$router.push('/cinema/search')
     }
   },
   
   mounted() {
     this.height = document.documentElement.clientHeight - 100 + 'px'
-    myhttp({
-      url: "/gateway?cityId=110100&ticketFlag=1&k=3502487",
-      headers: {
-        'X-Host': 'mall.film-ticket.cinema.list'
-      }
-    }).then(res => {
-      this.cinemaList = res.data.data.cinemas
-      
+    
+    if (this.$store.state.cinemaList.length === 0) {
+      this.$store.dispatch('getCinemaList', this.$store.state.cityId).then(res => {
+        // 状态立即更改，但是dom异步渲染
+        // $nextTick作用：在下次DOM更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
+        this.$nextTick(() => {
+          new BetterScroll('.cinema', {
+            scrollbar: {
+              fade: true
+            }
+          })
+        })
+      })
+    } else {
       // 状态立即更改，但是dom异步渲染
       // $nextTick作用：在下次DOM更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
       this.$nextTick(() => {
@@ -65,7 +76,7 @@ export default {
           }
         })
       })
-    })
+    }
   }
 }
 </script>

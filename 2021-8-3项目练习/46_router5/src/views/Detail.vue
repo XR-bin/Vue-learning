@@ -113,6 +113,9 @@ export default {
     //   console.log(res.data)
     // })
     
+    // 隐藏下菜单栏
+    this.$store.commit("tabbarShow", false)
+    
     myhttp({
       url: `/gateway?filmId=${this.$route.params.myid}&k=3492313`,
       headers: {
@@ -122,6 +125,11 @@ export default {
       // console.log(res.data.data.film)
       this.filminfo = res.data.data.film
     })
+  },
+  
+  beforeDestroy() {
+    // 显示下菜单栏
+    this.$store.commit("tabbarShow", true)
   }
 }
 </script>

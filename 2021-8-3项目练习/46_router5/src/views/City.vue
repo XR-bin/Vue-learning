@@ -3,7 +3,7 @@
     <van-index-bar :index-list= 'computedCityList' @change='changeHandler'>
       <div v-for="data in cityList" :key='data.type'>
         <van-index-anchor :index='data.type' />
-        <van-cell :title="item.name" v-for="(item,index) in data.list" :key='index' @click="changePageHandler(item.name)" />
+        <van-cell :title="item.name" v-for="(item,index) in data.list" :key='index' @click="changePageHandler(item.name, item.cityId)" />
       </div>
     </van-index-bar>
   </div>
@@ -51,10 +51,10 @@ export default {
       Toast(index)
     },
     
-    changePageHandler(name) {
+    changePageHandler(name, id) {
       // this.$store.state.cityName = name      不建议这样修改$store.state的状态,应该用下面的方法集中修改
       this.$store.commit("changeCityName", name)
-      
+      this.$store.commit("changeCityId", id)
       this.$router.back()
     }
   },

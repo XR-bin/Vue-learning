@@ -8,6 +8,7 @@ import Detail from '../views/Detail.vue'
 import Nowplaying from '../views/film/Nowplaying.vue'
 import Comingsoon from '../views/film/Comingsoon.vue'
 import City from '../views/City.vue'
+import Search from '../views/Search.vue'
 
 Vue.use(VueRouter) // 注册路由模块组件,并且创建了一个全局组件<router-view>,在App.vue文件里可以看到它的用处
 
@@ -48,6 +49,11 @@ const myRoutes = [
   {
     path: '/cinema',
     component: Cinema
+  },
+  
+  {
+    path: '/cinema/search',
+    component: Search
   },
   
   {
