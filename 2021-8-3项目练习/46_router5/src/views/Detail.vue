@@ -1,24 +1,25 @@
 <template>
   <div v-if="filminfo">
-    <detail-header v-top :mytitle="filminfo.name"></detail-header>
-    
-    <div :style="{backgroundImage:'url(' + filminfo.poster + ')'}"
-          style="height: 200px; background-size: cover; background-position: center;">
-    </div>
-    <h3>{{filminfo.name}}---{{filminfo.filmType.name}}</h3>
-    
-    <div>{{filminfo.category}}</div>
-    
-    <div>{{filminfo.premiereAt | dateFilter}}</div>
-    
-    <div>{{filminfo.nation}} | {{filminfo.runtime}}分钟</div>
-    
-    <div :class="isShow ? '' : 'synopsis'">{{filminfo.synopsis}}</div>
-    <div style="text-align: center;">
-      <i class="iconfont" :class="isShow ? 'icon-less' : 'icon-moreunfold'"
-      @click="isShow = !isShow"></i>
-    </div>
-    
+    <v-touch @swiperight="rightHandler()">
+      <detail-header v-top :mytitle="filminfo.name"></detail-header>
+      
+      <div :style="{backgroundImage:'url(' + filminfo.poster + ')'}"
+            style="height: 200px; background-size: cover; background-position: center;">
+      </div>
+      <h3>{{filminfo.name}}---{{filminfo.filmType.name}}</h3>
+      
+      <div>{{filminfo.category}}</div>
+      
+      <div>{{filminfo.premiereAt | dateFilter}}</div>
+      
+      <div>{{filminfo.nation}} | {{filminfo.runtime}}分钟</div>
+      
+      <div :class="isShow ? '' : 'synopsis'">{{filminfo.synopsis}}</div>
+      <div style="text-align: center;">
+        <i class="iconfont" :class="isShow ? 'icon-less' : 'icon-moreunfold'"
+        @click="isShow = !isShow"></i>
+      </div>
+    </v-touch>  
     <h3>演职人员</h3>
     <detail-swiper :perslide="4" swiperClass="swiper-actors">
       <div class="swiper-slide" v-for="(data, index) in filminfo.actors" :key="index">
@@ -50,6 +51,10 @@ import moment from 'moment'
 import detailSwiper from './detail/DetailSwiper.vue'
 import detailHeader from './detail/DetailHeader.vue'
 import { ImagePreview } from 'vant'
+import { mapMutations } from 'vuex'
+import VueTouch from 'vue-touch'
+
+Vue.use(VueTouch, { name: 'v-touch' })
 
 Vue.filter('dateFilter', (date) => {
   return moment(date).format('YYYY-MM-DD')
@@ -87,6 +92,12 @@ export default {
   },
   
   methods: {
+    ...mapMutations('TabbarModule', ['tabbarShow']),
+    
+    rightHandler() {
+      this.$router.back()
+    },
+    
     previewHandler(index) {
       ImagePreview({
         images: this.filminfo.photos,
@@ -114,7 +125,7 @@ export default {
     // })
     
     // 隐藏下菜单栏
-    this.$store.commit("tabbarShow", false)
+    this.tabbarShow(false)
     
     myhttp({
       url: `/gateway?filmId=${this.$route.params.myid}&k=3492313`,
@@ -129,7 +140,7 @@ export default {
   
   beforeDestroy() {
     // 显示下菜单栏
-    this.$store.commit("tabbarShow", true)
+    this.tabbarShow(true)
   }
 }
 </script>

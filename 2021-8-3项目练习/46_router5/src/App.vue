@@ -1,6 +1,6 @@
 <template>
   <div>
-    <tabbar v-show="$store.state.isTabbarShow"></tabbar>
+    <tabbar v-show="isTabbarShow"></tabbar>
     <!--
       路由容器 ： router-view
       这个路由容器其实就类似一个插槽slot，专门留给路由显示的的地方
@@ -17,6 +17,7 @@
 
 <script>
 import tabbar from './components/Tabbar'
+import { mapState } from 'vuex'
 
 // ES6 导出模块
 export default {
@@ -29,8 +30,13 @@ export default {
   components: {
     tabbar
   },
+  
+  computed: {
+    ...mapState('TabbarModule', ['isTabbarShow'])
+  },
 
   mounted() {
+    // console.log(mapState('TabbarModule', ['isTabbarShow']))
     // 1- 后端配置好 cors   允许任何跨域的情况下,可以直接拿数据
     // axios.get("http://www.mei.com/appapi/home/mktBannerApp/v3?siol_id=2013000100000000008&platform_code=PLATEFORM_H5").then(
     //   res => {

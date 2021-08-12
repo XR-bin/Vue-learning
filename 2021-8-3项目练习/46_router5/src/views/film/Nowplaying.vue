@@ -24,6 +24,7 @@ import axios from 'axios'
 import myhttp from '@/util/myhttp.js'    // 别名  @ => src的绝对路径
 import Vue from 'vue'
 import { List, Cell } from 'vant'
+import { mapState } from 'vuex'
 
 Vue.use(List).use(Cell)   // 全局注册
 
@@ -44,6 +45,10 @@ export default {
       total: 0       // 能加载的总数据长度
     }
   },
+  
+  computed: {
+    ...mapState('CityModule', ['cityId'])
+  },
 
   methods: {
     onLoad() {
@@ -57,7 +62,7 @@ export default {
       
       this.current++
       myhttp({
-        url: `/gateway?cityId=${this.$store.state.cityId}&pageNum=${this.current}&pageSize=10&type=1&k=6033802`,
+        url: `/gateway?cityId=${this.cityId}&pageNum=${this.current}&pageSize=10&type=1&k=6033802`,
         headers: {
           'X-Host': 'mall.film-ticket.film.list'
         }
@@ -91,7 +96,7 @@ export default {
 
   mounted() {
     axios({
-      url: `https://m.maizuo.com/gateway?cityId=${this.$store.state.cityId}&pageNum=1&pageSize=10&type=1&k=6033802`,
+      url: `https://m.maizuo.com/gateway?cityId=${this.cityId}&pageNum=1&pageSize=10&type=1&k=6033802`,
       headers: {
         'X-Client-Info': '{"a":"3000","ch":"1002","v":"5.0.4","e":"16281333366413511454359553","bc":"110100"}',
         'X-Host': 'mall.film-ticket.film.list'

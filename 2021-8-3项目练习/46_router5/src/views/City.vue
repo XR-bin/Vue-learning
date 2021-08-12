@@ -13,6 +13,7 @@
 import Vue from 'vue'
 import { IndexBar, IndexAnchor, Cell, Toast } from 'vant'
 import myhttp from '@/util/myhttp.js'
+import { mapMutations } from 'vuex'
 
 Vue.use(IndexBar).use(Cell)
 Vue.use(IndexAnchor)
@@ -25,6 +26,8 @@ export default {
   },
   
   methods: {
+    ...mapMutations('CityModule', ['changeCityName', 'changeCityId']),
+    
     cityDataHandler(cities) {
       // 输入的是原始数据    输出的是目标数据
       const letterArr = []
@@ -53,8 +56,8 @@ export default {
     
     changePageHandler(name, id) {
       // this.$store.state.cityName = name      不建议这样修改$store.state的状态,应该用下面的方法集中修改
-      this.$store.commit("changeCityName", name)
-      this.$store.commit("changeCityId", id)
+      this.changeCityName(name)
+      this.changeCityId(id)
       this.$router.back()
     }
   },

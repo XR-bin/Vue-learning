@@ -1,0 +1,3 @@
+手势组件安装vue-touch
+
+cnpm i --save vue-touch@next

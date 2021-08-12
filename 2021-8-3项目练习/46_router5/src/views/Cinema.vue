@@ -6,7 +6,7 @@
       @click-right="rightHandler()"
     >
       <template #left>
-        <span style="font-size: 18px;">{{ $store.state.cityName }}</span>
+        <span style="font-size: 18px;">{{ cityName }}</span>
         <van-icon name="arrow-down" color="black" />
       </template>
       <template #right>
@@ -16,7 +16,7 @@
     
     <div class="cinema" :style="{height: height}">
       <ul>
-        <li v-for="data in $store.state.cinemaList" :key="data.cinemaId">
+        <li v-for="data in cinemaList" :key="data.cinemaId">
           <div>{{data.name}}</div>
           <div class="address">{{data.address}}</div>
         </li>
@@ -29,20 +29,28 @@
 import BetterScroll from 'better-scroll'
 import Vue from 'vue'
 import { NavBar, Icon } from 'vant'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 Vue.use(NavBar).use(Icon)   // 全局注册组件NavBar
 
 export default {
   data() {
     return {
-      cinemaList: [],
       height: 0
     }
   },
   
+  computed: {
+    ...mapState('CityModule', ['cityId', 'cityName']),
+    ...mapState('CinemaModule', ['cinemaList'])
+  },
+  
   methods: {
+    ...mapMutations('CinemaModule', ['clearCinemaList']),
+    ...mapActions('CinemaModule', ['getCinemaList']),
+    
     leftHandler() {
-      this.$store.commit('clearCinemaList')
+      this.clearCinemaList()
       this.$router.push('/city')
     },
     
@@ -54,8 +62,8 @@ export default {
   mounted() {
     this.height = document.documentElement.clientHeight - 100 + 'px'
     
-    if (this.$store.state.cinemaList.length === 0) {
-      this.$store.dispatch('getCinemaList', this.$store.state.cityId).then(res => {
+    if (this.cinemaList.length === 0) {
+      this.getCinemaList(this.cityId).then(res => {
         // 状态立即更改，但是dom异步渲染
         // $nextTick作用：在下次DOM更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。
         this.$nextTick(() => {

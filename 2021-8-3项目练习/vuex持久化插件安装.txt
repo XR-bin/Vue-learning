@@ -1,0 +1,3 @@
+这插件可以使vuex的状态持久保存
+
+cnpm i --save vuex-persistedstate
